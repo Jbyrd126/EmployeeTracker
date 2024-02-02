@@ -3,6 +3,13 @@ const inquirer = require("inquirer");
 require("dotenv").config();
 const db = require("./db/connection");
 
+
+
+function quit() {
+  console.log("Git outta here!");
+  process.exit();
+}
+
 const prompt = () => {
   inquirer
     .prompt([
@@ -11,20 +18,13 @@ const prompt = () => {
         name: "choices",
         message: "What would you like to do?",
         choices: [
-          {name: "view all departments",
-          value: "VIEW_DEPARTMENTS"},
-          {name: "view all employees",
-          value: "VIEW_EMPLOYEES"},
-          {name: "view all roles",
-          value: "VIEW_ROLES"},
-          {name: "add a department",
-          value: "ADD_DEPARTMENT"},
-          {name: "add a role",
-          value: "ADD_ROLE"},
-          {name: "add an emplyee",
-          value: "ADD_EMPLOYEE"},
-          {name: "update an employee's role",
-          value: "UPDATE_EMPLOYEE_ROLE"},
+          { name: "view all departments", value: "VIEW_DEPARTMENTS" },
+          { name: "view all employees", value: "VIEW_EMPLOYEES" },
+          { name: "view all roles", value: "VIEW_ROLES" },
+          { name: "add a department", value: "ADD_DEPARTMENT" },
+          { name: "add a role", value: "ADD_ROLE" },
+          { name: "add an employee", value: "ADD_EMPLOYEE" },
+          { name: "update an employee's role", value: "UPDATE_EMPLOYEE_ROLE" },
         ],
       },
     ])
@@ -58,12 +58,11 @@ const prompt = () => {
         case `UPDATE_EMPLOYEE_ROLE`:
           updateEMployeeRole();
           break;
+        default:
+          quit();
       }
     });
 };
-
-// This will have the initial prompt for "What do you want to do?"
-prompt();
 
 
 function getAllEmployees(params) {
@@ -74,18 +73,21 @@ function getAllEmployees(params) {
 }
 
 function getAllRoles(params) {
-    db.query(`select * from roles`,(err,results)=>{
-        console.table(results);
-        start();
-    })
+  db.query(`select * from roles`, (err, results) => {
+    console.table(results);
+    prompt();
+  });
 }
 
 /** ToDo --eventually I have a Join that shows the department name */
 function viewDepartments() {
-
-    dbquery('select * from department', (err,results)=> {
-        console.table(results);
-        console.log("Viewing All Departments");
-        prompt();
-    });
+  dbquery("select * from department", (err, results) => {
+    console.table(results);
+    console.log("Viewing All Departments");
+    prompt();
+  });
 }
+
+
+// This will have the initial prompt for "What do you want to do?"
+prompt();
