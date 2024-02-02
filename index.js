@@ -1,30 +1,24 @@
 // inquirer
 const inquirer = require("inquirer");
+// Universal Variable
 require("dotenv").config();
 const db = require("./db/connection");
-
-
-
-function quit() {
-  console.log("Git outta here!");
-  process.exit();
-}
 
 const prompt = () => {
   inquirer
     .prompt([
       {
-        type: "list",
+        type: "rawlist",
         name: "choices",
         message: "What would you like to do?",
         choices: [
-          { name: "view all departments", value: "VIEW_DEPARTMENTS" },
-          { name: "view all employees", value: "VIEW_EMPLOYEES" },
-          { name: "view all roles", value: "VIEW_ROLES" },
-          { name: "add a department", value: "ADD_DEPARTMENT" },
-          { name: "add a role", value: "ADD_ROLE" },
-          { name: "add an employee", value: "ADD_EMPLOYEE" },
-          { name: "update an employee's role", value: "UPDATE_EMPLOYEE_ROLE" },
+          { name: "View all departments", value: "VIEW_DEPARTMENTS" },
+          { name: "View all employees", value: "VIEW_EMPLOYEES" },
+          { name: "View all roles", value: "VIEW_ROLES" },
+          { name: "Add a department", value: "ADD_DEPARTMENT" },
+          { name: "Add a role", value: "ADD_ROLE" },
+          { name: "Add an employee", value: "ADD_EMPLOYEE" },
+          { name: "Update an employee's role", value: "UPDATE_EMPLOYEE_ROLE" },
         ],
       },
     ])
@@ -32,10 +26,12 @@ const prompt = () => {
       let choice = res.choices;
       switch (choice) {
         case `VIEW_EMPLOYEES`:
+          console.log("Who you lookin for mane?");
           getAllEmployees();
           break;
 
         case `VIEW_ROLES`:
+          console.log("Sheesus, Why is legal makin so much?");
           getAllRoles();
           break;
 
@@ -59,35 +55,60 @@ const prompt = () => {
           updateEMployeeRole();
           break;
         default:
-          quit();
       }
     });
 };
 
-
-function getAllEmployees(params) {
-  db.query(`select * from employees`, (err, results) => {
+function getAllEmployees() {
+  db.query(`SELECT * from employee`, (err, results) => {
+    if (err) throw err;
     console.table(results);
     prompt();
   });
 }
 
-function getAllRoles(params) {
-  db.query(`select * from roles`, (err, results) => {
+function getAllRoles() {
+  db.query(`SELECT * from role`, (err, results) => {
+    if (err) throw err;
     console.table(results);
     prompt();
   });
 }
 
 /** ToDo --eventually I have a Join that shows the department name */
-function viewDepartments() {
-  dbquery("select * from department", (err, results) => {
+function getAllDepartments() {
+  db.query(`SELECT * from department`, (err, results) => {
+    if (err) throw err;
     console.table(results);
     console.log("Viewing All Departments");
     prompt();
   });
 }
 
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        name: "newDepartment",
+        type: "input",
+        message: "What do you want to call this department?",
+      },
+    ])
+    .then((userResponse) => {
+      db.query(
+        `INSERT into department SET ?`,
+        {
+          name: userResponse.newDepartment,
+        },
+        (err,) => {
+          if (err) throw err;
+          console.log(`\n ${userResponse.newDepartment} successfully added to database! \n`);
+
+          prompt();
+        }
+      );
+    });
+}
 
 // This will have the initial prompt for "What do you want to do?"
 prompt();

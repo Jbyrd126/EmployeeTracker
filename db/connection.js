@@ -5,9 +5,10 @@ const db = mysql.createConnection(
     {
       host: "localhost",
       // MySQL username,
-      user: "root",
+      user: process.env.DB_USER,
       // MySQL password
       password: process.env.DB_PASSWORD,
+      //MySQL DB name
       database: process.env.DB_NAME,
     },
     console.log("You're Hoggin and Loggin my guy!")
