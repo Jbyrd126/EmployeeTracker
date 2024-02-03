@@ -11,6 +11,6 @@ const db = mysql.createConnection(
       //MySQL DB name
       database: process.env.DB_NAME,
     },
-    console.log("You're Hoggin and Loggin my guy!")
+ console.log("Computing the secret to life, the universe, and everything ------")
   );
   module.exports = db;
