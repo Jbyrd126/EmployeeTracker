@@ -48,11 +48,11 @@ const prompt = () => {
           break;
 
         case `ADD_EMPLOYEE`:
-          addDepartment();
+          addEmployee();
           break;
 
         case `UPDATE_EMPLOYEE_ROLE`:
-          updateEMployeeRole();
+          updateEmployeeRole();
           break;
         default:
       }
@@ -110,5 +110,42 @@ function addDepartment() {
     });
 }
 
+
+addRole = () => {
+  db.query(`SELECT * FROM department;`, (err, res) => {
+      if (err) throw err;
+      let departments = res.map(department => ({name: department.name, value: department.id }));
+      inquirer.prompt([
+          {
+          name: 'title',
+          type: 'input',
+          message: 'What is the name of the role you want to add?'   
+          },
+          {
+          name: 'salary',
+          type: 'input',
+          message: 'What is the salary of the role you want to add?'   
+          },
+          {
+          name: 'departmentName',
+          type: 'rawlist',
+          message: 'Which department do you want to add the new role to?',
+          choices: departments
+          },
+      ]).then((response) => {
+          db.query(`INSERT INTO role SET ?`, 
+          {
+              title: response.title,
+              salary: response.salary,
+              department_id: response.departmentName,
+          },
+          (err, res) => {
+              if (err) throw err;
+              console.log(`\n ${response.title} successfully added to database! \n`);
+             prompt();
+          })
+      })
+  })
+};
 // This will have the initial prompt for "What do you want to do?"
 prompt();
