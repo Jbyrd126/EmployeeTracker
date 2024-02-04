@@ -9,6 +9,29 @@
 
 A mySQL app to track, add, remove and manipulate employees, roles and departments within a database.
 
+
+## Screenshots
+
+![alt text](<images/Screenshot (7).png>)
+
+![alt text](<images/Screenshot (8).png>)
+
+![alt text](<images/Screenshot (9).png>)
+
+![alt text](<images/Screenshot (10).png>)
+
+![alt text](<images/Screenshot (11).png>)
+
+![alt text](<images/Screenshot (12).png>)
+
+![alt text](<images/Screenshot (13).png>)
+
+## Demo Link
+
+
+ Demo: https://drive.google.com/file/d/1pvSyHTe7IOWp1-wOOleHlLsU-G5XD8am/view
+
+
 ## Table of Contents 
 
 * [Installation](#installation)
