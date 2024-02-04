@@ -1,4 +1,6 @@
-// mysql config goes here
+// I also enjoy traversing the interwebs -- theyre a series of tubes yo
+
+//this bad boy right here is gunna make all that happen -- bring on the unicorns!
 const mysql = require("mysql2");
 // mysql connection location
 const db = mysql.createConnection({

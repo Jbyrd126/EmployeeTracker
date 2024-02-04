@@ -10,6 +10,7 @@
   "author": "robbyrd",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^2.4.2",
     "console.table": "^0.10.0",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
